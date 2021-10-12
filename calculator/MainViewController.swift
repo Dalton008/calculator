@@ -13,23 +13,16 @@ class MainViewController: UIViewController {
 
     var firstTextFieldText = Int()
     var secondTextFieldText = Int ()
-    var result = Int()
     
     var label = UILabel()
     var firstTextField = UITextField()
     var secondTextField = UITextField()
-    var resultTextField = UILabel()
+    var resultLabel = UILabel()
     var buttonGetResult = UIButton()
     var pickerArithmeticSigns = UIPickerView()
+    var pickerTextField = UITextField()
     
-    
-    
-//    enum arithmeticSigns: String,  {
-//        case plus = "+"
-//        case minus = "-"
-//        case division = "/"
-//        case multiplication = "*"
-//    }
+    var elem = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +31,13 @@ class MainViewController: UIViewController {
         firstTextField = myTextField(textField: firstTextField, x: 60, y: 125, width: 120, height: 30, string: "first num")
         secondTextField = myTextField(textField: secondTextField, x: 230, y: 125, width: 120, height: 30, string: "second num")
         getResultButton()
-        self.view.addSubview(resultTextField)
+        resultLabel.frame = CGRect(x: 150, y: 250, width: 120, height: 30)
+        self.view.addSubview(resultLabel)
         pickerArithmeticSigns = UIPickerView(frame: CGRect(x: 190, y: 120, width: 35, height: 40))
-//        pickerArithmeticSigns.center = view.center
         pickerArithmeticSigns.dataSource = self
         pickerArithmeticSigns.delegate = self
         self.view.addSubview(pickerArithmeticSigns)
-        
+        pickerTextField.inputView = pickerArithmeticSigns
     }
 
     private func myLabel()
@@ -83,9 +76,20 @@ class MainViewController: UIViewController {
     {
         self.firstTextFieldText = Int(firstTextField.text!)!
         self.secondTextFieldText = Int(secondTextField.text!)!
-        self.result = self.firstTextFieldText + self.secondTextFieldText
+        var result = Int()
         
-//        var result = firstTextFieldText + secondTextFieldText
+        elem = String(pickerTextField.text!)
+        
+        if elem == "+" {
+            result = firstTextFieldText + secondTextFieldText
+        } else if elem == "-" {
+            result = firstTextFieldText - secondTextFieldText
+        } else if elem == "/" {
+            result = firstTextFieldText / secondTextFieldText
+        } else if elem == "*" {
+            result = firstTextFieldText * secondTextFieldText
+        }
+        resultLabel.text = "\(result)"
     }
 }
 
@@ -95,9 +99,6 @@ protocol Printable {
 
 extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate
 {
-
-//    @IBOutlet weak var pickerView: UIPickerView!
-    
     enum ArithmeticSigns: Int, Printable {
         case plus = 0
         case minus = 1
@@ -120,18 +121,10 @@ extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 4
+        return ArithmeticSigns.count
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return ArithmeticSigns(rawValue: row)?.description
     }
-    
 }
-
-//extension MainViewController: UIPickerViewDelegate
-//{
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return ArithmeticSigns(raw)
-//    }
-//}
