@@ -11,9 +11,6 @@ import UIKit
 
 class MainViewController: UIViewController {
 
-    var firstTextFieldText = Int()
-    var secondTextFieldText = Int ()
-    
     var label = UILabel()
     var firstTextField = UITextField()
     var secondTextField = UITextField()
@@ -23,6 +20,7 @@ class MainViewController: UIViewController {
     var pickerTextField = UITextField()
     
     var arithmeticSign = String()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,32 +72,64 @@ class MainViewController: UIViewController {
     
     @objc private func operation()
     {
-        self.firstTextFieldText = Int(firstTextField.text!)!
-        self.secondTextFieldText = Int(secondTextField.text!)!
         var result = Int()
         
-        arithmeticSign = String(pickerTextField.text!)
-        
-        if arithmeticSign == "+" {
-            result = firstTextFieldText + secondTextFieldText
-        } else if arithmeticSign == "-" {
-            result = firstTextFieldText - secondTextFieldText
-        } else if arithmeticSign == "/" {
-            result = firstTextFieldText / secondTextFieldText
-        } else if arithmeticSign == "*" {
-            result = firstTextFieldText * secondTextFieldText
+        guard let firstTextFieldText = Int(firstTextField.text!),
+                   let secondTextFieldText = Int(secondTextField.text!) else {
+                       let ac = UIAlertController(title: "Error", message: "Wrong value", preferredStyle: .alert)
+                       let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                       ac.addAction(cancel)
+                       self.present(ac, animated: true, completion: nil)
+                       return
         }
-        resultLabel.text = "\(result)"
+        
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.frame = CGRect(x: 190, y: 160, width: 40, height: 40)
+        spinner.color = UIColor.lightGray
+        spinner.startAnimating()
+        self.view.addSubview(spinner)
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.arithmeticSign = String(self.pickerTextField.text!)
+            
+            if self.arithmeticSign == "+" {
+                result = firstTextFieldText + secondTextFieldText
+            } else if self.arithmeticSign == "-" {
+                result = firstTextFieldText - secondTextFieldText
+            } else if self.arithmeticSign == "/" {
+                result = firstTextFieldText / secondTextFieldText
+            } else if self.arithmeticSign == "*" {
+                result = firstTextFieldText * secondTextFieldText
+            }
+            
+            self.resultLabel.text = "\(result)"
+            spinner.stopAnimating()
+        }
+
+//        arithmeticSign = String(pickerTextField.text!)
+//
+//        if arithmeticSign == "+" {
+//            result = firstTextFieldText + secondTextFieldText
+//        } else if arithmeticSign == "-" {
+//            result = firstTextFieldText - secondTextFieldText
+//        } else if arithmeticSign == "/" {
+//            result = firstTextFieldText / secondTextFieldText
+//        } else if arithmeticSign == "*" {
+//            result = firstTextFieldText * secondTextFieldText
+//        }
+//
+//        resultLabel.text = "\(result)"
     }
 }
 
-protocol Printable {
-    var description: String { get }
-}
+//protocol Printable {
+//    var description: String { get }
+//}
 
 extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate
 {
-    enum ArithmeticSigns: Int, Printable {
+    enum ArithmeticSigns: Int {
         case plus = 0
         case minus = 1
         case division = 2
