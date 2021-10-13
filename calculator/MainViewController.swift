@@ -22,7 +22,7 @@ class MainViewController: UIViewController {
     var pickerArithmeticSigns = UIPickerView()
     var pickerTextField = UITextField()
     
-    var elem = String()
+    var arithmeticSign = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +36,8 @@ class MainViewController: UIViewController {
         pickerArithmeticSigns = UIPickerView(frame: CGRect(x: 190, y: 120, width: 35, height: 40))
         pickerArithmeticSigns.dataSource = self
         pickerArithmeticSigns.delegate = self
-        self.view.addSubview(pickerArithmeticSigns)
         pickerTextField.inputView = pickerArithmeticSigns
+        self.view.addSubview(pickerArithmeticSigns)
     }
 
     private func myLabel()
@@ -78,15 +78,15 @@ class MainViewController: UIViewController {
         self.secondTextFieldText = Int(secondTextField.text!)!
         var result = Int()
         
-        elem = String(pickerTextField.text!)
+        arithmeticSign = String(pickerTextField.text!)
         
-        if elem == "+" {
+        if arithmeticSign == "+" {
             result = firstTextFieldText + secondTextFieldText
-        } else if elem == "-" {
+        } else if arithmeticSign == "-" {
             result = firstTextFieldText - secondTextFieldText
-        } else if elem == "/" {
+        } else if arithmeticSign == "/" {
             result = firstTextFieldText / secondTextFieldText
-        } else if elem == "*" {
+        } else if arithmeticSign == "*" {
             result = firstTextFieldText * secondTextFieldText
         }
         resultLabel.text = "\(result)"
@@ -126,5 +126,9 @@ extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return ArithmeticSigns(rawValue: row)?.description
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        pickerTextField.text = ArithmeticSigns(rawValue: row)?.description
     }
 }
