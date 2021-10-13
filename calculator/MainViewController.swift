@@ -20,7 +20,6 @@ class MainViewController: UIViewController {
     var pickerTextField = UITextField()
     
     var arithmeticSign = String()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +34,7 @@ class MainViewController: UIViewController {
         pickerArithmeticSigns.dataSource = self
         pickerArithmeticSigns.delegate = self
         pickerTextField.inputView = pickerArithmeticSigns
+        
         self.view.addSubview(pickerArithmeticSigns)
     }
 
@@ -106,26 +106,8 @@ class MainViewController: UIViewController {
             self.resultLabel.text = "\(result)"
             spinner.stopAnimating()
         }
-
-//        arithmeticSign = String(pickerTextField.text!)
-//
-//        if arithmeticSign == "+" {
-//            result = firstTextFieldText + secondTextFieldText
-//        } else if arithmeticSign == "-" {
-//            result = firstTextFieldText - secondTextFieldText
-//        } else if arithmeticSign == "/" {
-//            result = firstTextFieldText / secondTextFieldText
-//        } else if arithmeticSign == "*" {
-//            result = firstTextFieldText * secondTextFieldText
-//        }
-//
-//        resultLabel.text = "\(result)"
     }
 }
-
-//protocol Printable {
-//    var description: String { get }
-//}
 
 extension MainViewController: UIPickerViewDataSource, UIPickerViewDelegate
 {
