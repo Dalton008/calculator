@@ -20,6 +20,7 @@ class CalculateController: UIViewController {
     private var pickerArithmeticSigns = UIPickerView()
     var pickerTextField = UITextField()
     var resultLabel = UILabel()
+    var spinner = UIActivityIndicatorView()
     var currentExpresion: Expresion? {
         guard let lshArg = Int(firstTextField.text!), let rshArg = Int(secondTextField.text!), let currentOperation = currentOperation else { return nil }
         return Expresion(lshArgument: lshArg, rshArgument: rshArg, currentOperation: currentOperation)
@@ -44,6 +45,7 @@ class CalculateController: UIViewController {
         view.backgroundColor = .white
         firstTextField = myTextField(textField: firstTextField, x: 60, y: 125, width: 120, height: 30, string: "first num")
         secondTextField = myTextField(textField: secondTextField, x: 230, y: 125, width: 120, height: 30, string: "second num")
+        spinner = createSpinner()
         getResultButton()
         resultLabel.frame = CGRect(x: 150, y: 250, width: 120, height: 30)
         self.view.addSubview(resultLabel)
@@ -74,9 +76,22 @@ class CalculateController: UIViewController {
         label.backgroundColor = .white
     }
     
+    func createSpinner() -> UIActivityIndicatorView
+    {
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.frame = CGRect(x: 190, y: 160, width: 40, height: 40)
+        spinner.color = UIColor.lightGray
+        self.view.addSubview(spinner)
+        return spinner
+    }
+    
     @objc
     private func buttonDidTap() {
-        presenter?.resolveExpresion()
+        spinner.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.presenter?.resolveExpresion()
+            self.spinner.stopAnimating()
+        }
     }
     
     private func getResultButton()
