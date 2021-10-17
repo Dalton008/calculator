@@ -9,18 +9,18 @@
 import Foundation
 
 final class BasikMathImpl: BasikMath {
+    
     func resolve(_ expresion: Expresion) -> Int {
         let result = expresion.currentOperation
         switch result {
-        case .plus:
-            return expresion.lshArgument + expresion.rshArgument
-        case .minus:
-            return expresion.lshArgument - expresion.rshArgument
-        case .multiplication:
-            return expresion.lshArgument * expresion.rshArgument
-        case .division:
-            return expresion.lshArgument / expresion.rshArgument
+            case .plus:
+                return expresion.lshArgument + expresion.rshArgument
+            case .minus:
+                return expresion.lshArgument - expresion.rshArgument
+            case .multiplication:
+                return expresion.lshArgument * expresion.rshArgument
+            case .division:
+                return expresion.lshArgument / expresion.rshArgument
         }
     }
-
 }

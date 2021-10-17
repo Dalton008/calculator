@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 class CalculateController: UIViewController {
-        
+	
+	var expressionView = UIView()
     var presenter: ExpresionPresenter?
-    
     var label = UILabel()
     var firstTextField = UITextField()
     var secondTextField = UITextField()
@@ -43,18 +43,24 @@ class CalculateController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        firstTextField = myTextField(textField: firstTextField, x: 60, y: 125, width: 120, height: 30, string: "first num")
-        secondTextField = myTextField(textField: secondTextField, x: 230, y: 125, width: 120, height: 30, string: "second num")
+		firstTextField.textAlignment = .center
+		firstTextField.borderStyle = UITextField.BorderStyle.roundedRect
+		secondTextField.textAlignment = .center
+		secondTextField.borderStyle = UITextField.BorderStyle.roundedRect
+		expressionView.createField(field: firstTextField, topConst: 125, leftConst: 60, widthConst: 120, heightConst: 30, backgroundColor: .white)
+		expressionView.createField(field: secondTextField, topConst: 125, leftConst: 235, widthConst: 120, heightConst: 30, backgroundColor: .white)
+//        firstTextField = myTextField(textField: firstTextField, x: 60, y: 125, width: 120, height: 30, string: "first num")
+//        secondTextField = myTextField(textField: secondTextField, x: 230, y: 125, width: 120, height: 30, string: "second num")
         spinner = createSpinner()
         getResultButton()
-        resultLabel.frame = CGRect(x: 150, y: 250, width: 120, height: 30)
-        self.view.addSubview(resultLabel)
+//        resultLabel.frame = CGRect(x: 150, y: 250, width: 120, height: 30)
+//        self.view.addSubview(resultLabel)
+		self.view.addSubview(expressionView)
         pickerArithmeticSigns = choiceUIElement()
         myLabel()
     }
     
-    private func myTextField(textField: UITextField, x: Int, y: Int, width: Int, height: Int, string: String) -> UITextField
-    {
+    private func myTextField(textField: UITextField, x: Int, y: Int, width: Int, height: Int, string: String) -> UITextField {
         var textFieldWork = textField
         let textFieldFrame = CGRect(x: x, y: y, width: width, height: height)
         textFieldWork = UITextField(frame: textFieldFrame)
@@ -66,8 +72,7 @@ class CalculateController: UIViewController {
         return textFieldWork
     }
     
-    private func myLabel()
-    {
+    private func myLabel() {
         label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
         label.center = CGPoint(x: 100, y: 100)
         label.textAlignment = NSTextAlignment.center
@@ -76,8 +81,7 @@ class CalculateController: UIViewController {
         label.backgroundColor = .white
     }
     
-    func createSpinner() -> UIActivityIndicatorView
-    {
+    func createSpinner() -> UIActivityIndicatorView {
         let spinner = UIActivityIndicatorView(style: .medium)
         spinner.frame = CGRect(x: 190, y: 160, width: 40, height: 40)
         spinner.color = UIColor.lightGray
@@ -94,8 +98,7 @@ class CalculateController: UIViewController {
         }
     }
     
-    private func getResultButton()
-    {
+    private func getResultButton() {
         buttonGetResult = UIButton(type: .roundedRect)
         buttonGetResult.frame = CGRect(x: 145, y: 200, width: 120, height: 30)
         buttonGetResult.setTitle("Get result", for: .normal)
@@ -116,7 +119,6 @@ class CalculateController: UIViewController {
 
 extension CalculateController: UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
 
-    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -124,9 +126,11 @@ extension CalculateController: UIPickerViewDataSource, UIPickerViewDelegate, UIT
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return ArithmeticSigns.count
     }
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return ArithmeticSigns(rawValue: row)?.description
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         pickerTextField.text = ArithmeticSigns(rawValue: row)?.description
     }
@@ -134,14 +138,14 @@ extension CalculateController: UIPickerViewDataSource, UIPickerViewDelegate, UIT
 
 extension CalculateController: ExpresionView {
     
-    func showAlert(){
+    func showAlert() {
         let ac = UIAlertController(title: "Error", message: "Wrong value", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         ac.addAction(cancel)
         present(ac, animated: true, completion: nil)
     }
     
-    func setExpresion(_ result: Int){
+    func setExpresion(_ result: Int) {
         self.resultLabel.text = "\(result)"
     }
 }
