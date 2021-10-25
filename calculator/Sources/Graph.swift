@@ -7,18 +7,23 @@
 //
 
 import Foundation
+import UIKit
 
 class Graph {
-    private let basikMath: BasikMath
-    
-    init() {
-        basikMath = BasikMathImpl()
-    }
-    
-    func makeViewController() -> CalculateController {
-        let presenter = ExpresionPresenterImp(basikMath: basikMath)
-        let calulateView = CalculateController(presenter: presenter)
-        presenter.attach(calulateView)
-        return calulateView
-    }
+	private let basikMath: BasikMath
+
+	init() {
+		basikMath = BasikMathImpl()
+	}
+
+	func makeViewController() -> UIViewController {
+		TabBarController(calculateController: makeCalculateController(), tableController: TableController(), maketControler: MaketController())
+	}
+
+	func makeCalculateController() -> UIViewController {
+		let presenter = ExpresionPresenterImp(basikMath: basikMath)
+		let calulateView = CalculateController(presenter: presenter)
+		presenter.attach(calulateView)
+		return calulateView
+	}
 }

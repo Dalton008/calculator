@@ -9,5 +9,5 @@
 import Foundation
 
 protocol BasikMath {
-    func resolve(_ expresion: Expresion) -> Int // написать тесты, проверить 4 операции
+	func resolve(_ expresion: Expresion) -> Int // написать тесты, проверить 4 операции
 }
