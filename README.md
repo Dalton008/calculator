@@ -1,3 +1,0 @@
-# Swift
-
-Swift training project

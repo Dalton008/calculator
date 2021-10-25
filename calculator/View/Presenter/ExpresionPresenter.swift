@@ -9,5 +9,5 @@
 import Foundation
 
 @objc protocol ExpresionPresenter {
-    func resolveExpresion()
+	func resolveExpresion()
 }
