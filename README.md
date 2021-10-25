@@ -1,3 +1,3 @@
-# calculator
+# Swift
 
 Swift training project
