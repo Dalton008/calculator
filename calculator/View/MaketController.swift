@@ -162,8 +162,8 @@ class MaketController: UIViewController {
 	}
 
 	private func creteMainTitleName() {
-
 		mainTitleName.text = "Recipe Form"
+//		mainTitleName.font = UIFont(name: "Recoleta-SemiBold", size: 20)
 		mainTitleName.textAlignment = .center
 		mainTitle.setupConstraints(label: mainTitleName, topAnchor: mainTitle.topAnchor, botAnchor: mainTitle.bottomAnchor, leftAnchor: mainTitle.leadingAnchor, rightAnchor: mainTitle.trailingAnchor, topConst: 16.5, botConst: -16.5, leadingConst: 68, trailingConst: -68, heightConst: nil, widthConst: nil)
 	}

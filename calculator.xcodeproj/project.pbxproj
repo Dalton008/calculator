@@ -115,6 +115,7 @@
 		FA739C242717414A003F17C4 /* calculator */ = {
 			isa = PBXGroup;
 			children = (
+				FAEEB88A27198E59005EE1CA /* Presenter */,
 				FA855C6A271C9ED0007FE350 /* Sources */,
 				FAEEB88B27198E60005EE1CA /* View */,
 				FAEEB88927198E4F005EE1CA /* Model */,
@@ -173,7 +174,6 @@
 				FAF2BD8A271DC4DB007B16B4 /* TabBarController.swift */,
 				FAF2BD8C271DC810007B16B4 /* TableController.swift */,
 				FA8ADEED271EF6580020D019 /* MaketController.swift */,
-				FAEEB88A27198E59005EE1CA /* Presenter */,
 			);
 			path = View;
 			sourceTree = "<group>";
